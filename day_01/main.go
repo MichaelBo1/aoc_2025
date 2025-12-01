@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"log"
+	"math"
 	"os"
 	"strconv"
 	"strings"
@@ -33,12 +34,13 @@ func main() {
 	input := os.Args[1]
 
 	rotations := mustScanToSlice(input)
-	p1Answer := part1(rotations)
+	p1Answer, p2Answer := answer(rotations)
 	fmt.Println("PART_1:", p1Answer)
+	fmt.Println("PART_2:", p2Answer)
 }
 
-func part1(rotations []string) int {
-	result := 0
+func answer(rotations []string) (part1, part2 int) {
+	part1, part2 = 0, 0
 	// Starts at 50 per https://adventofcode.com/2025/day/1
 	dial := 50
 	for _, rot := range rotations {
@@ -48,19 +50,54 @@ func part1(rotations []string) int {
 			panic(err)
 		}
 
+		part2 += countZeroCrosses(dial, direction, amount)
+
 		if direction == 'L' {
 			amount *= -1
 		}
+
 		// 0 - 99 and circuar.
 		dial = mod(dial+amount, 100)
 		if dial == 0 {
-			result += 1
+			part1 += 1
 		}
 	}
 
-	return result
+	return
 }
 
 func mod(a, n int) int {
 	return (a%n + n) % n
+}
+
+func countZeroCrosses(start int, dir byte, steps int) int {
+	var firstCross int
+	if dir == 'R' {
+		firstCross = (100 - start) % 100
+	} else {
+		firstCross = start % 100
+	}
+
+	if firstCross == 0 {
+		firstCross = 100
+	}
+
+	if steps < firstCross {
+		return 0
+	}
+
+	return 1 + (steps-firstCross)/100
+
+}
+
+func floorDiv(a, b int) int {
+	result := int(math.Floor(float64(a) / float64(b)))
+	return result
+}
+
+func abs(n int) int {
+	if n < 0 {
+		return n * -1
+	}
+	return n
 }
