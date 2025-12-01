@@ -4,7 +4,6 @@ import (
 	"bufio"
 	"fmt"
 	"log"
-	"math"
 	"os"
 	"strconv"
 	"strings"
@@ -88,16 +87,4 @@ func countZeroCrosses(start int, dir byte, steps int) int {
 
 	return 1 + (steps-firstCross)/100
 
-}
-
-func floorDiv(a, b int) int {
-	result := int(math.Floor(float64(a) / float64(b)))
-	return result
-}
-
-func abs(n int) int {
-	if n < 0 {
-		return n * -1
-	}
-	return n
 }
