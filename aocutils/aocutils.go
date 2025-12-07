@@ -24,3 +24,19 @@ func MustScanToStringSlice(filename string) []string {
 
 	return result
 }
+
+// StringSliceTo2DMatrix converts []string of large integers into [][]int,
+// where each row is a slice of the individual digits.
+func StringSliceTo2DMatrix(list []string) [][]int {
+	result := make([][]int, len(list))
+
+	for i, s := range list {
+		row := make([]int, len(s))
+		for j, ch := range s {
+			row[j] = int(ch - '0')
+		}
+		result[i] = row
+	}
+
+	return result
+}
