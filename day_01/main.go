@@ -1,30 +1,13 @@
 package main
 
 import (
-	"bufio"
 	"fmt"
 	"log"
 	"os"
 	"strconv"
-	"strings"
+
+	"github.com/MichaelBo1/aoc2025/aocutils"
 )
-
-func mustScanToSlice(input string) []string {
-	fhand, err := os.Open(input)
-	if err != nil {
-		panic(err)
-	}
-
-	var result []string
-
-	scan := bufio.NewScanner(fhand)
-	for scan.Scan() {
-		line := strings.TrimSpace(scan.Text())
-		result = append(result, line)
-	}
-
-	return result
-}
 
 func main() {
 	if len(os.Args) != 2 {
@@ -32,7 +15,7 @@ func main() {
 	}
 	input := os.Args[1]
 
-	rotations := mustScanToSlice(input)
+	rotations := aocutils.MustScanToStringSlice(input)
 	p1Answer, p2Answer := answer(rotations)
 	fmt.Println("PART_1:", p1Answer)
 	fmt.Println("PART_2:", p2Answer)
